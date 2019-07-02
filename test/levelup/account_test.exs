@@ -63,4 +63,65 @@ defmodule Levelup.AccountTest do
       assert %Ecto.Changeset{} = Account.change_user(user)
     end
   end
+
+  describe "tenants" do
+    alias Levelup.Account.Tenant
+
+    @valid_attrs %{slug: "some slug", title: "some title"}
+    @update_attrs %{slug: "some updated slug", title: "some updated title"}
+    @invalid_attrs %{slug: nil, title: nil}
+
+    def tenant_fixture(attrs \\ %{}) do
+      {:ok, tenant} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Account.create_tenant()
+
+      tenant
+    end
+
+    test "list_tenants/0 returns all tenants" do
+      tenant = tenant_fixture()
+      assert Account.list_tenants() == [tenant]
+    end
+
+    test "get_tenant!/1 returns the tenant with given id" do
+      tenant = tenant_fixture()
+      assert Account.get_tenant!(tenant.id) == tenant
+    end
+
+    test "create_tenant/1 with valid data creates a tenant" do
+      assert {:ok, %Tenant{} = tenant} = Account.create_tenant(@valid_attrs)
+      assert tenant.slug == "some slug"
+      assert tenant.title == "some title"
+    end
+
+    test "create_tenant/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Account.create_tenant(@invalid_attrs)
+    end
+
+    test "update_tenant/2 with valid data updates the tenant" do
+      tenant = tenant_fixture()
+      assert {:ok, %Tenant{} = tenant} = Account.update_tenant(tenant, @update_attrs)
+      assert tenant.slug == "some updated slug"
+      assert tenant.title == "some updated title"
+    end
+
+    test "update_tenant/2 with invalid data returns error changeset" do
+      tenant = tenant_fixture()
+      assert {:error, %Ecto.Changeset{}} = Account.update_tenant(tenant, @invalid_attrs)
+      assert tenant == Account.get_tenant!(tenant.id)
+    end
+
+    test "delete_tenant/1 deletes the tenant" do
+      tenant = tenant_fixture()
+      assert {:ok, %Tenant{}} = Account.delete_tenant(tenant)
+      assert_raise Ecto.NoResultsError, fn -> Account.get_tenant!(tenant.id) end
+    end
+
+    test "change_tenant/1 returns a tenant changeset" do
+      tenant = tenant_fixture()
+      assert %Ecto.Changeset{} = Account.change_tenant(tenant)
+    end
+  end
 end

@@ -29,6 +29,8 @@ config :levelup, Levelup.Account.Guardian,
   issuer: "levelup",
   secret_key: "YiAAE+h8zUSnRPEA4EgdFRZChu7FJo6loyuIIgWtqop/9H+MoQZLZiIbr9+WlKro"
 
+config :triplex, repo: Levelup.Repo
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

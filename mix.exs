@@ -46,6 +46,7 @@ defmodule Levelup.MixProject do
       {:guardian, "~> 1.0"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 0.12"},
+      {:triplex, "~> 1.3.0-rc.1"}
     ]
   end
 
