@@ -1,6 +1,14 @@
 defmodule LevelupWeb.Router do
   use LevelupWeb, :router
 
+  pipeline :auth do
+    plug Levelup.Account.Pipeline
+  end
+
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,13 +22,17 @@ defmodule LevelupWeb.Router do
   end
 
   scope "/", LevelupWeb do
-    pipe_through :browser
+    pipe_through [:browser, :auth]
 
     get "/", PageController, :index
+    get "/login", SessionController, :new
+    post "/login", SessionController, :login
+    post "/logout", SessionController, :logout
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", LevelupWeb do
-  #   pipe_through :api
-  # end
+  scope "/", LevelupWeb do
+    pipe_through [:browser, :auth, :ensure_auth]
+
+    get "/secret", PageController, :secret
+  end
 end

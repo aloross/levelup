@@ -25,6 +25,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :levelup, Levelup.Account.Guardian,
+  issuer: "levelup",
+  secret_key: "YiAAE+h8zUSnRPEA4EgdFRZChu7FJo6loyuIIgWtqop/9H+MoQZLZiIbr9+WlKro"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
