@@ -1,6 +1,6 @@
 defmodule LevelupWeb.PageController do
   use LevelupWeb, :controller
-  alias Levelup.Account.Item
+  alias Levelup.Accounts.Item
 
   def index(conn, _params) do
     render(conn, "index.html")

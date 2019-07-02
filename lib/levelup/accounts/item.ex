@@ -1,4 +1,4 @@
-defmodule Levelup.Account.Item do
+defmodule Levelup.Accounts.Item do
   use Ecto.Schema
   import Ecto.Changeset
   alias Levelup.Repo

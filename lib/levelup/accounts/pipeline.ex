@@ -1,8 +1,8 @@
-defmodule Levelup.Account.Pipeline do
+defmodule Levelup.Accounts.Pipeline do
   use Guardian.Plug.Pipeline,
     otp_app: :levelup,
-    error_handler: Levelup.Account.ErrorHandler,
-    module: Levelup.Account.Guardian
+    error_handler: Levelup.Accounts.ErrorHandler,
+    module: Levelup.Accounts.Guardian
 
   # If there is a session token, restrict it to an access token and validate it
   plug Guardian.Plug.VerifySession, claims: %{"typ" => "access"}

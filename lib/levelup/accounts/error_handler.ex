@@ -1,4 +1,4 @@
-defmodule Levelup.Account.ErrorHandler do
+defmodule Levelup.Accounts.ErrorHandler do
   import Plug.Conn
   use LevelupWeb, :controller
 

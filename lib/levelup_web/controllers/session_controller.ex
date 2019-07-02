@@ -1,10 +1,10 @@
 defmodule LevelupWeb.SessionController do
   use LevelupWeb, :controller
 
-  alias Levelup.{Account, Account.Credential, Account.Guardian}
+  alias Levelup.{Accounts, Accounts.Credential, Accounts.Guardian}
 
   def new(conn, _) do
-    changeset = Account.change_credential(%Credential{})
+    changeset = Accounts.change_credential(%Credential{})
     maybe_credential = Guardian.Plug.current_resource(conn)
 
     if maybe_credential do
@@ -15,7 +15,7 @@ defmodule LevelupWeb.SessionController do
   end
 
   def login(conn, %{"credential" => %{"username" => username, "password" => password}}) do
-    Account.authenticate_credential(username, password)
+    Accounts.authenticate_credential(username, password)
     |> login_reply(conn)
   end
 

@@ -1,8 +1,8 @@
-defmodule Levelup.Account.Credential do
+defmodule Levelup.Accounts.Credential do
   use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
-  alias Levelup.Account.Tenant
+  alias Levelup.Accounts.Tenant
 
   schema "credentials" do
     field :password, :string

@@ -25,7 +25,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :levelup, Levelup.Account.Guardian,
+config :levelup, Levelup.Accounts.Guardian,
   issuer: "levelup",
   secret_key: "YiAAE+h8zUSnRPEA4EgdFRZChu7FJo6loyuIIgWtqop/9H+MoQZLZiIbr9+WlKro"
 

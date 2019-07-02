@@ -1,8 +1,8 @@
-defmodule Levelup.Account do
+defmodule Levelup.Accounts do
   import Ecto.Query, warn: false
   alias Levelup.Repo
 
-  alias Levelup.Account.Credential
+  alias Levelup.Accounts.Credential
   alias Comeonin.Bcrypt
 
   def authenticate_credential(username, plain_text_password) do
@@ -48,7 +48,7 @@ defmodule Levelup.Account do
     Credential.changeset(credential, %{})
   end
 
-  alias Levelup.Account.Tenant
+  alias Levelup.Accounts.Tenant
 
   def list_tenants do
     Repo.all(Tenant)

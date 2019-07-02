@@ -2,7 +2,7 @@ defmodule LevelupWeb.Router do
   use LevelupWeb, :router
 
   pipeline :auth do
-    plug Levelup.Account.Pipeline
+    plug Levelup.Accounts.Pipeline
   end
 
   pipeline :ensure_auth do

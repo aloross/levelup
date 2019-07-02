@@ -1,7 +1,7 @@
-defmodule Levelup.Account.Tenant do
+defmodule Levelup.Accounts.Tenant do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Levelup.Account.Credential
+  alias Levelup.Accounts.Credential
 
   schema "tenants" do
     field :slug, :string
