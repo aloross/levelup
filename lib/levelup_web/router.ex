@@ -28,6 +28,7 @@ defmodule LevelupWeb.Router do
     get "/login", SessionController, :new
     post "/login", SessionController, :login
     post "/logout", SessionController, :logout
+    resources "/credentials", CredentialController
   end
 
   scope "/", LevelupWeb do

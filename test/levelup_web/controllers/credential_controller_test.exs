@@ -3,9 +3,9 @@ defmodule LevelupWeb.CredentialControllerTest do
 
   alias Levelup.Accounts
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @create_attrs %{password: "some password", username: "some username"}
+  @update_attrs %{password: "some updated password", username: "some updated username"}
+  @invalid_attrs %{password: nil, username: nil}
 
   def fixture(:credential) do
     {:ok, credential} = Accounts.create_credential(@create_attrs)
@@ -60,7 +60,7 @@ defmodule LevelupWeb.CredentialControllerTest do
       assert redirected_to(conn) == Routes.credential_path(conn, :show, credential)
 
       conn = get(conn, Routes.credential_path(conn, :show, credential))
-      assert html_response(conn, 200)
+      assert html_response(conn, 200) =~ "some updated password"
     end
 
     test "renders errors when data is invalid", %{conn: conn, credential: credential} do

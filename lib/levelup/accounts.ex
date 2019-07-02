@@ -23,7 +23,7 @@ defmodule Levelup.Accounts do
   end
 
   def list_credentials do
-    Repo.all(Credential)
+    Repo.all(Credential) |> Repo.preload(:tenant)
   end
 
   def get_credential!(id), do: Repo.get!(Credential, id) |> Repo.preload(:tenant)
