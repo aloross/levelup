@@ -6,7 +6,7 @@ defmodule LevelupWeb.PageController do
   end
 
   def secret(conn, _) do
-    user = Guardian.Plug.current_resource(conn)
-    render(conn, "secret.html", current_user: user)
+    credential = Guardian.Plug.current_resource(conn)
+    render(conn, "secret.html", current_user: credential)
   end
 end

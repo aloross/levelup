@@ -1,21 +1,21 @@
 defmodule LevelupWeb.SessionController do
   use LevelupWeb, :controller
 
-  alias Levelup.{Account, Account.User, Account.Guardian}
+  alias Levelup.{Account, Account.Credential, Account.Guardian}
 
   def new(conn, _) do
-    changeset = Account.change_user(%User{})
-    maybe_user = Guardian.Plug.current_resource(conn)
+    changeset = Account.change_credential(%Credential{})
+    maybe_credential = Guardian.Plug.current_resource(conn)
 
-    if maybe_user do
+    if maybe_credential do
       redirect(conn, to: "/secret")
     else
       render(conn, "new.html", changeset: changeset, action: Routes.session_path(conn, :login))
     end
   end
 
-  def login(conn, %{"user" => %{"username" => username, "password" => password}}) do
-    Account.authenticate_user(username, password)
+  def login(conn, %{"credential" => %{"username" => username, "password" => password}}) do
+    Account.authenticate_credential(username, password)
     |> login_reply(conn)
   end
 
@@ -25,10 +25,10 @@ defmodule LevelupWeb.SessionController do
     |> redirect(to: "/login")
   end
 
-  defp login_reply({:ok, user}, conn) do
+  defp login_reply({:ok, credential}, conn) do
     conn
     |> put_flash(:success, "Welcome back!")
-    |> Guardian.Plug.sign_in(user)
+    |> Guardian.Plug.sign_in(credential)
     |> redirect(to: "/secret")
   end
 

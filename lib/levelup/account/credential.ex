@@ -1,9 +1,9 @@
-defmodule Levelup.Account.User do
+defmodule Levelup.Account.Credential do
   use Ecto.Schema
   import Ecto.Changeset
   alias Comeonin.Bcrypt
 
-  schema "users" do
+  schema "credentials" do
     field :password, :string
     field :username, :string
 
@@ -11,8 +11,8 @@ defmodule Levelup.Account.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
-    user
+  def changeset(credential, attrs) do
+    credential
     |> cast(attrs, [:username, :password])
     |> validate_required([:username, :password])
     |> put_password_hash()

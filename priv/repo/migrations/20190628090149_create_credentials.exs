@@ -1,8 +1,8 @@
-defmodule Levelup.Repo.Migrations.CreateUsers do
+defmodule Levelup.Repo.Migrations.CreateCredentials do
   use Ecto.Migration
 
   def change do
-    create table(:users) do
+    create table(:credentials) do
       add :username, :string
       add :password, :string
 

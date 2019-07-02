@@ -3,14 +3,14 @@ defmodule Levelup.Account.Guardian do
 
   alias Levelup.Account
 
-  def subject_for_token(user, _claims) do
-    {:ok, to_string(user.id)}
+  def subject_for_token(credential, _claims) do
+    {:ok, to_string(credential.id)}
   end
 
   def resource_from_claims(%{"sub" => id}) do
-    case Account.get_user!(id) do
+    case Account.get_credential!(id) do
       nil -> {:error, :resource_not_found}
-      user -> {:ok, user}
+      credential -> {:ok, credential}
     end
   end
 end
