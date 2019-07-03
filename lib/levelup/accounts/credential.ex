@@ -7,13 +7,14 @@ defmodule Levelup.Accounts.Credential do
   schema "credentials" do
     field :password, :string
     field :username, :string
+    field :role, :string
     belongs_to :tenant, Tenant
     timestamps()
   end
 
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:username, :password, :tenant_id])
+    |> cast(attrs, [:username, :password, :tenant_id, :role])
     |> validate_required([:username, :password, :tenant_id])
     |> put_password_hash()
   end

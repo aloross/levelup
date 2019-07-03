@@ -13,8 +13,20 @@ emca = Repo.insert!(%Levelup.Accounts.Tenant{slug: "emca", title: "EMCA"})
 Triplex.create("acme")
 Triplex.create("emca")
 
-Accounts.create_credential(%{username: "adrien", password: "password", tenant_id: acme.id})
-Accounts.create_credential(%{username: "diane", password: "password", tenant_id: acme.id})
+Accounts.create_credential(%{
+  username: "adrien",
+  password: "password",
+  tenant_id: acme.id,
+  role: "admin"
+})
+
+Accounts.create_credential(%{
+  username: "diane",
+  password: "password",
+  tenant_id: acme.id,
+  role: "manager"
+})
+
 Accounts.create_credential(%{username: "bobby", password: "password", tenant_id: emca.id})
 
 Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 1"}, prefix: Triplex.to_prefix("acme"))

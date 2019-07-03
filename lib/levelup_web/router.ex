@@ -3,10 +3,19 @@ defmodule LevelupWeb.Router do
 
   pipeline :auth do
     plug Levelup.Accounts.Pipeline
+    plug Levelup.Accounts.PopulateAssigns
   end
 
   pipeline :ensure_auth do
     plug Guardian.Plug.EnsureAuthenticated
+  end
+
+  pipeline :ensure_manager do
+    plug Levelup.Accounts.EnsureManager
+  end
+
+  pipeline :ensure_admin do
+    plug Levelup.Accounts.EnsureAdmin
   end
 
   pipeline :browser do
@@ -28,12 +37,22 @@ defmodule LevelupWeb.Router do
     get "/login", SessionController, :new
     post "/login", SessionController, :login
     post "/logout", SessionController, :logout
-    resources "/credentials", CredentialController
   end
 
   scope "/", LevelupWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
     get "/secret", PageController, :secret
+  end
+
+  scope "/", LevelupWeb do
+    pipe_through [:browser, :auth, :ensure_auth, :ensure_manager]
+    resources "/credentials", CredentialController
+  end
+
+  scope "/admin", LevelupWeb do
+    pipe_through [:browser, :auth, :ensure_auth, :ensure_admin]
+
+    get "/", AdminController, :index
   end
 end

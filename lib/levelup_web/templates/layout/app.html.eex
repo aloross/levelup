@@ -23,12 +23,19 @@
           <a class="navbar-brand" href="/">Levelup</a>
           <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav">
-              <li class="nav-link"><%= link("secret", to: "/secret") %></li>
-              <li class="nav-link"><%= link("credentials", to: "/credentials") %></li>
+              <%= if @conn.assigns.logged_in do %>
+                <li class="nav-link"><%= link("secret", to: Routes.page_path(@conn, :secret)) %></li>
+                <%= if @conn.assigns.is_manager do %>
+                  <li class="nav-link"><%= link("credentials", to: Routes.credential_path(@conn, :index)) %></li>
+                <% end %>
+                <%= if @conn.assigns.is_admin do %>
+                  <li class="nav-link"><%= link("admin", to: Routes.admin_path(@conn, :index)) %></li>
+                <% end %>
+              <% end %>
             </ul>
             <div class="d-flex ml-auto">
-              <%= if logged_in?(@conn) do %>
-                <%= current_user(@conn).username %> | <%= current_user(@conn).tenant.title %>
+              <%= if @conn.assigns.logged_in do %>
+                <%= @conn.assigns.current_user.username %>&nbsp;(<%= @conn.assigns.current_user.role %>)&nbsp;|&nbsp;<%= @conn.assigns.current_user.tenant.title %>
                 <%= link("logout", to: Routes.session_path(@conn, :logout), method: :post) %>
               <% else %>
                 <%= link("login", to: Routes.session_path(@conn, :login)) %>
