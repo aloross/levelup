@@ -29,14 +29,42 @@ Accounts.create_credential(%{
 
 Accounts.create_credential(%{username: "bobby", password: "password", tenant_id: emca.id})
 
-Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 1"}, prefix: Triplex.to_prefix("acme"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 2"}, prefix: Triplex.to_prefix("acme"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 3"}, prefix: Triplex.to_prefix("acme"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 4"}, prefix: Triplex.to_prefix("acme"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Acme product 5"}, prefix: Triplex.to_prefix("acme"))
+Repo.insert!(%Levelup.Positions.Position{name: "Acme position 1"},
+  prefix: Triplex.to_prefix("acme")
+)
 
-Repo.insert!(%Levelup.Accounts.Item{name: "Emca product 1"}, prefix: Triplex.to_prefix("emca"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Emca product 2"}, prefix: Triplex.to_prefix("emca"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Emca product 3"}, prefix: Triplex.to_prefix("emca"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Emca product 4"}, prefix: Triplex.to_prefix("emca"))
-Repo.insert!(%Levelup.Accounts.Item{name: "Emca product 5"}, prefix: Triplex.to_prefix("emca"))
+Repo.insert!(%Levelup.Positions.Position{name: "Acme position 2"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Acme position 3"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Acme position 4"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Acme position 5"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Emca position 1"},
+  prefix: Triplex.to_prefix("emca")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Emca position 2"},
+  prefix: Triplex.to_prefix("emca")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Emca position 3"},
+  prefix: Triplex.to_prefix("emca")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Emca position 4"},
+  prefix: Triplex.to_prefix("emca")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Emca position 5"},
+  prefix: Triplex.to_prefix("emca")
+)

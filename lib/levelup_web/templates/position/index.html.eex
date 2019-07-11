@@ -1,0 +1,26 @@
+<h1>Listing Positions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for position <- @positions do %>
+    <tr>
+      <td><%= position.name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.position_path(@conn, :show, position) %>
+        <%= link "Edit", to: Routes.position_path(@conn, :edit, position) %>
+        <%= link "Delete", to: Routes.position_path(@conn, :delete, position), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Position", to: Routes.position_path(@conn, :new) %></span>

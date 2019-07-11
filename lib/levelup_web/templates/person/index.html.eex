@@ -1,0 +1,31 @@
+<section class="container">
+  <h1>Listing Persons</h1>
+
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Identifier</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for person <- @persons do %>
+      <tr>
+        <td><%= person.firstname %></td>
+        <td><%= person.lastname %></td>
+        <td><%= person.identifier %></td>
+
+        <td>
+          <%= link "Show", to: Routes.person_path(@conn, :show, person) %>
+          <%= link "Edit", to: Routes.person_path(@conn, :edit, person) %>
+          <%= link "Delete", to: Routes.person_path(@conn, :delete, person), method: :delete, data: [confirm: "Are you sure?"] %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= link "New Person", to: Routes.person_path(@conn, :new) %>
+</section>

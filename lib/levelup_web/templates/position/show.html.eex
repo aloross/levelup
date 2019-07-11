@@ -1,0 +1,13 @@
+<h1>Show Position</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @position.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.position_path(@conn, :edit, @position) %></span>
+<span><%= link "Back", to: Routes.position_path(@conn, :index) %></span>

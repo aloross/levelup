@@ -11,49 +11,51 @@
     <header>
       <section>
         <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-          <button 
-            class="navbar-toggler"
-            type="button" data-toggle="collapse"
-            data-target="#navbarToggler"
-            aria-controls="navbarTogglerDemo02"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="/">Levelup</a>
-          <div class="collapse navbar-collapse" id="navbarToggler">
-            <ul class="navbar-nav">
-              <%= if @conn.assigns.logged_in do %>
-                <li class="nav-link"><%= link("secret", to: Routes.page_path(@conn, :secret)) %></li>
-                <%= if @conn.assigns.is_manager do %>
-                  <li class="nav-link"><%= link("credentials", to: Routes.credential_path(@conn, :index)) %></li>
+          <div class="container">
+            <a class="navbar-brand" href="/">Levelup</a>
+            <button 
+              class="navbar-toggler"
+              type="button" data-toggle="collapse"
+              data-target="#navbarToggler"
+              aria-controls="navbarTogglerDemo02"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+              <ul class="navbar-nav">
+                <%= if @conn.assigns.logged_in do %>
+                  <li class="nav-link"><%= link("persons", to: Routes.person_path(@conn, :index)) %></li>
+                  <%= if @conn.assigns.is_manager do %>
+                    <li class="nav-link"><%= link("credentials", to: Routes.credential_path(@conn, :index)) %></li>
+                  <% end %>
+                  <%= if @conn.assigns.is_admin do %>
+                    <li class="nav-link"><%= link("admin", to: Routes.admin_path(@conn, :index)) %></li>
+                  <% end %>
                 <% end %>
-                <%= if @conn.assigns.is_admin do %>
-                  <li class="nav-link"><%= link("admin", to: Routes.admin_path(@conn, :index)) %></li>
+              </ul>
+              <div class="d-flex ml-auto">
+                <%= if @conn.assigns.logged_in do %>
+                  <%= @conn.assigns.current_user.username %>&nbsp;(<%= @conn.assigns.current_user.role %>)&nbsp;|&nbsp;<%= @conn.assigns.current_user.tenant.title %>
+                  <%= link("logout", to: Routes.session_path(@conn, :logout), method: :post) %>
+                <% else %>
+                  <%= link("login", to: Routes.session_path(@conn, :login)) %>
                 <% end %>
-              <% end %>
-            </ul>
-            <div class="d-flex ml-auto">
-              <%= if @conn.assigns.logged_in do %>
-                <%= @conn.assigns.current_user.username %>&nbsp;(<%= @conn.assigns.current_user.role %>)&nbsp;|&nbsp;<%= @conn.assigns.current_user.tenant.title %>
-                <%= link("logout", to: Routes.session_path(@conn, :logout), method: :post) %>
-              <% else %>
-                <%= link("login", to: Routes.session_path(@conn, :login)) %>
-              <% end %>
+              </div>
             </div>
           </div>
-        </div>
+        </nav>
       </section>
     </header>
-    <main role="main" class="container">
+    <main role="main" class="pt-3">
       <%= if get_flash(@conn, :success) do %>
-        <p role="alert"><%= get_flash(@conn, :success) %></p>
+        <div role="alert" class="container alert alert-success"><%= get_flash(@conn, :success) %></div>
       <% end %>
       <%= if get_flash(@conn, :info) do %>
-        <p role="alert"><%= get_flash(@conn, :info) %></p>
+        <div role="alert" class="container alert alert-info"><%= get_flash(@conn, :info) %></div>
       <% end %>
       <%= if get_flash(@conn, :error) do %>
-        <p role="alert"><%= get_flash(@conn, :error) %></p>
+        <div role="alert" class="container alert alert-danger"><%= get_flash(@conn, :error) %></div>
       <% end %>
       <%= render @view_module, @view_template, assigns %>
     </main>

@@ -1,0 +1,21 @@
+<section class="container">
+  <h1>Show Person</h1>
+
+  <ul>
+    <li>
+      <strong>Firstname:</strong>
+      <%= @person.firstname %>
+    </li>
+    <li>
+      <strong>Lastname:</strong>
+      <%= @person.lastname %>
+    </li>
+    <li>
+      <strong>Identifier:</strong>
+      <%= @person.identifier %>
+    </li>
+  </ul>
+
+  <%= link "Edit", to: Routes.person_path(@conn, :edit, @person) %>
+  <%= link "Back", to: Routes.person_path(@conn, :index) %>
+</section>

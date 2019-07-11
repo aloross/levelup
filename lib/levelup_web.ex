@@ -41,6 +41,7 @@ defmodule LevelupWeb do
 
       import LevelupWeb.ErrorHelpers
       import LevelupWeb.Gettext
+      import LevelupWeb.InputHelpers
       alias LevelupWeb.Router.Helpers, as: Routes
     end
   end

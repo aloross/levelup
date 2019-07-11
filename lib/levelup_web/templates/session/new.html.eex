@@ -1,20 +1,12 @@
-<h2>Login Page</h2>
+<section class="container">
+  <h2 class="text-center">Login Page</h2>
 
-<%= form_for @changeset, @action, fn f -> %>
+  <div class="row">
+    <%= form_for @changeset, @action, [class: "col-md-6 offset-md-3"], fn f -> %>
+      <%= input f, :username %>
+      <%= input f, :password %>
 
-  <div>
-    <%= label f, :username %>
-    <%= text_input f, :username %>
-    <%= error_tag f, :username %>
+      <%= submit "Submit", class: "btn btn-primary" %>
+    <% end %>
   </div>
-
-  <div>
-    <%= label f, :password %>
-    <%= password_input f, :password %>
-    <%= error_tag f, :password %>
-  </div>
-
-  <div>
-    <%= submit "Submit" %>
-  </div>
-<% end %>
+</section>

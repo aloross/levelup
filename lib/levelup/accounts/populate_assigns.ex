@@ -11,6 +11,7 @@ defmodule Levelup.Accounts.PopulateAssigns do
       conn
       |> assign(:logged_in, logged_in)
       |> assign(:current_user, credential)
+      |> assign(:current_tenant, credential.tenant.slug)
       |> assign(:is_admin, credential.role == "admin")
       |> assign(:is_manager, credential.role == "manager" || credential.role == "admin")
     else

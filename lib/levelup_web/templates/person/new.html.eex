@@ -1,0 +1,5 @@
+<section class="container">
+  <h1>New Person</h1>
+  <%= render "form.html", Map.put(assigns, :action, Routes.person_path(@conn, :create)) %>
+  <%= link "Back", to: Routes.person_path(@conn, :index) %>
+</section>

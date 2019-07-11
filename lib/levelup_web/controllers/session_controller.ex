@@ -8,7 +8,7 @@ defmodule LevelupWeb.SessionController do
     maybe_credential = Guardian.Plug.current_resource(conn)
 
     if maybe_credential do
-      redirect(conn, to: "/secret")
+      redirect(conn, to: Routes.page_path(conn, :index))
     else
       render(conn, "new.html", changeset: changeset, action: Routes.session_path(conn, :login))
     end
@@ -29,7 +29,7 @@ defmodule LevelupWeb.SessionController do
     conn
     |> put_flash(:success, "Welcome back!")
     |> Guardian.Plug.sign_in(credential)
-    |> redirect(to: "/secret")
+    |> redirect(to: Routes.page_path(conn, :index))
   end
 
   defp login_reply({:error, reason}, conn) do
