@@ -27,7 +27,11 @@ defmodule LevelupWeb.CredentialController do
         |> redirect(to: Routes.credential_path(conn, :show, credential))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        tenants =
+          Accounts.list_tenants()
+          |> Enum.map(&{&1.title, &1.id})
+
+        render(conn, "new.html", changeset: changeset, tenants: tenants)
     end
   end
 
@@ -57,7 +61,11 @@ defmodule LevelupWeb.CredentialController do
         |> redirect(to: Routes.credential_path(conn, :show, credential))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", credential: credential, changeset: changeset)
+        tenants =
+          Accounts.list_tenants()
+          |> Enum.map(&{&1.title, &1.id})
+
+        render(conn, "edit.html", credential: credential, changeset: changeset, tenants: tenants)
     end
   end
 

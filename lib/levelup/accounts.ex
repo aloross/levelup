@@ -3,18 +3,17 @@ defmodule Levelup.Accounts do
   alias Levelup.Repo
 
   alias Levelup.Accounts.Credential
-  alias Comeonin.Bcrypt
 
   def authenticate_credential(username, plain_text_password) do
     query = from c in Credential, where: c.username == ^username
 
     case Repo.one(query) |> Repo.preload(:tenant) do
       nil ->
-        Bcrypt.dummy_checkpw()
+        Comeonin.Bcrypt.dummy_checkpw()
         {:error, :invalid_credentials}
 
       credential ->
-        if Bcrypt.checkpw(plain_text_password, credential.password) do
+        if Comeonin.Bcrypt.checkpw(plain_text_password, credential.password) do
           {:ok, credential}
         else
           {:error, :invalid_credentials}

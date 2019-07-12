@@ -48,6 +48,7 @@ defmodule LevelupWeb.Router do
 
   scope "/", LevelupWeb do
     pipe_through [:browser, :auth, :ensure_auth, :ensure_manager]
+
     resources "/credentials", CredentialController
   end
 

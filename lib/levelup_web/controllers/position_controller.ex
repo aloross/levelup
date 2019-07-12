@@ -5,7 +5,7 @@ defmodule LevelupWeb.PositionController do
   alias Levelup.Positions.Position
 
   def index(conn, _params) do
-    positions = Positions.list_positions()
+    positions = Positions.list_positions(conn.assigns.current_tenant)
     render(conn, "index.html", positions: positions)
   end
 
@@ -15,7 +15,7 @@ defmodule LevelupWeb.PositionController do
   end
 
   def create(conn, %{"position" => position_params}) do
-    case Positions.create_position(position_params) do
+    case Positions.create_position(position_params, conn.assigns.current_tenant) do
       {:ok, position} ->
         conn
         |> put_flash(:info, "Position created successfully.")
@@ -27,20 +27,20 @@ defmodule LevelupWeb.PositionController do
   end
 
   def show(conn, %{"id" => id}) do
-    position = Positions.get_position!(id)
+    position = Positions.get_position!(id, conn.assigns.current_tenant)
     render(conn, "show.html", position: position)
   end
 
   def edit(conn, %{"id" => id}) do
-    position = Positions.get_position!(id)
+    position = Positions.get_position!(id, conn.assigns.current_tenant)
     changeset = Positions.change_position(position)
     render(conn, "edit.html", position: position, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "position" => position_params}) do
-    position = Positions.get_position!(id)
+    position = Positions.get_position!(id, conn.assigns.current_tenant)
 
-    case Positions.update_position(position, position_params) do
+    case Positions.update_position(position, position_params, conn.assigns.current_tenant) do
       {:ok, position} ->
         conn
         |> put_flash(:info, "Position updated successfully.")
@@ -52,8 +52,8 @@ defmodule LevelupWeb.PositionController do
   end
 
   def delete(conn, %{"id" => id}) do
-    position = Positions.get_position!(id)
-    {:ok, _position} = Positions.delete_position(position)
+    position = Positions.get_position!(id, conn.assigns.current_tenant)
+    {:ok, _position} = Positions.delete_position(position, conn.assigns.current_tenant)
 
     conn
     |> put_flash(:info, "Position deleted successfully.")

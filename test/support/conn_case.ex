@@ -23,6 +23,71 @@ defmodule LevelupWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint LevelupWeb.Endpoint
+
+      defp as_user(%{conn: conn}) do
+        tenant =
+          Levelup.Repo.insert!(%Levelup.Accounts.Tenant{
+            title: "ACME",
+            slug: "acme"
+          })
+
+        credential =
+          Levelup.Repo.insert!(%Levelup.Accounts.Credential{
+            username: "user",
+            password: "password",
+            tenant: tenant
+          })
+
+        conn =
+          conn
+          |> Levelup.Accounts.Guardian.Plug.sign_in(credential)
+
+        {:ok, conn: conn}
+      end
+
+      defp as_manager(%{conn: conn}) do
+        tenant =
+          Levelup.Repo.insert!(%Levelup.Accounts.Tenant{
+            title: "ACME",
+            slug: "acme"
+          })
+
+        credential =
+          Levelup.Repo.insert!(%Levelup.Accounts.Credential{
+            username: "manager",
+            password: "password",
+            role: "manager",
+            tenant: tenant
+          })
+
+        conn =
+          conn
+          |> Levelup.Accounts.Guardian.Plug.sign_in(credential)
+
+        {:ok, conn: conn}
+      end
+
+      defp as_admin(%{conn: conn}) do
+        tenant =
+          Levelup.Repo.insert!(%Levelup.Accounts.Tenant{
+            title: "ACME",
+            slug: "acme"
+          })
+
+        credential =
+          Levelup.Repo.insert!(%Levelup.Accounts.Credential{
+            username: "admin",
+            password: "password",
+            role: "admin",
+            tenant: tenant
+          })
+
+        conn =
+          conn
+          |> Levelup.Accounts.Guardian.Plug.sign_in(credential)
+
+        {:ok, conn: conn}
+      end
     end
   end
 
