@@ -24,22 +24,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarToggler">
               <ul class="navbar-nav">
-                <%= if @conn.assigns.logged_in do %>
-                  <li class="nav-link"><%= link("persons", to: Routes.person_path(@conn, :index)) %></li>
-                  <%= if @conn.assigns.is_manager do %>
-                    <li class="nav-link"><%= link("credentials", to: Routes.credential_path(@conn, :index)) %></li>
+                <%= if @logged_in do %>
+                  <li class="nav-link"><%= link(gettext("persons"), to: Routes.person_path(@conn, :index)) %></li>
+                  <li class="nav-link"><%= link(gettext("positions"), to: Routes.position_path(@conn, :index)) %></li>
+                  <li class="nav-link"><%= link(gettext("competences"), to: Routes.competence_path(@conn, :index)) %></li>
+                  <%= if @is_manager do %>
+                    <li class="nav-link"><%= link(gettext("credentials"), to: Routes.credential_path(@conn, :index)) %></li>
                   <% end %>
-                  <%= if @conn.assigns.is_admin do %>
-                    <li class="nav-link"><%= link("admin", to: Routes.admin_path(@conn, :index)) %></li>
+                  <%= if @is_admin do %>
+                    <li class="nav-link"><%= link(gettext("admin"), to: Routes.admin_path(@conn, :index)) %></li>
                   <% end %>
                 <% end %>
               </ul>
               <div class="d-flex ml-auto">
-                <%= if @conn.assigns.logged_in do %>
-                  <%= @conn.assigns.current_user.username %>&nbsp;(<%= @conn.assigns.current_user.role %>)&nbsp;|&nbsp;<%= @conn.assigns.current_user.tenant.title %>
-                  <%= link("logout", to: Routes.session_path(@conn, :logout), method: :post) %>
+                <%= if @logged_in do %>
+                  <%= @current_user.username %>&nbsp;(<%= @current_user.role %>)&nbsp;|&nbsp;<%= @current_user.tenant.title %>
+                  <%= link(gettext("logout"), to: Routes.session_path(@conn, :logout), method: :post) %>
                 <% else %>
-                  <%= link("login", to: Routes.session_path(@conn, :login)) %>
+                  <%= link(gettext("login"), to: Routes.session_path(@conn, :login)) %>
                 <% end %>
               </div>
             </div>

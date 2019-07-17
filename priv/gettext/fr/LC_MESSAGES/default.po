@@ -1,0 +1,52 @@
+## `msgid`s in this file come from POT (.pot) files.
+##
+## Do not add, change, or remove `msgid`s manually here as
+## they're tied to the ones in the corresponding POT file
+## (with the same domain).
+##
+## Use `mix gettext.extract --merge` or `mix gettext.merge`
+## to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: fr\n"
+"Plural-Forms: nplurals=2\n"
+
+#, elixir-format
+#: lib/levelup_web/templates/page/index.html.eex:2
+msgid "Welcome to %{name}!"
+msgstr "Bievenue sur %{name} !"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:35
+msgid "admin"
+msgstr "administration"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:30
+msgid "competences"
+msgstr "competences"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:32
+msgid "credentials"
+msgstr "accès"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:44
+msgid "login"
+msgstr "connexion"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:42
+msgid "logout"
+msgstr "déconnexion"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:28
+msgid "persons"
+msgstr "personnes"
+
+#, elixir-format
+#: lib/levelup_web/templates/layout/app.html.eex:29
+msgid "positions"
+msgstr "postes"
