@@ -44,6 +44,8 @@ defmodule LevelupWeb.Router do
 
     resources "/positions", PositionController
     resources "/persons", PersonController
+    resources "/competences", CompetenceController
+    resources "/levels", LevelController
   end
 
   scope "/", LevelupWeb do

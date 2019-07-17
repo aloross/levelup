@@ -1,0 +1,5 @@
+<h1>Edit Level</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.level_path(@conn, :update, @level)) %>
+
+<span><%= link "Back", to: Routes.level_path(@conn, :index) %></span>

@@ -1,0 +1,5 @@
+<h1>New Competence</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.competence_path(@conn, :create)) %>
+
+<span><%= link "Back", to: Routes.competence_path(@conn, :index) %></span>

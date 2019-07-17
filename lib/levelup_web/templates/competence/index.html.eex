@@ -1,0 +1,26 @@
+<h1>Listing Competences</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for competence <- @competences do %>
+    <tr>
+      <td><%= competence.name %></td>
+
+      <td>
+        <%= link "Show", to: Routes.competence_path(@conn, :show, competence) %>
+        <%= link "Edit", to: Routes.competence_path(@conn, :edit, competence) %>
+        <%= link "Delete", to: Routes.competence_path(@conn, :delete, competence), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Competence", to: Routes.competence_path(@conn, :new) %></span>
