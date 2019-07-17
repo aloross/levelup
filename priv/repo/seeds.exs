@@ -29,23 +29,35 @@ Accounts.create_credential(%{
 
 Accounts.create_credential(%{username: "bobby", password: "password", tenant_id: emca.id})
 
-Repo.insert!(%Levelup.Positions.Position{name: "Acme position 1"},
+Repo.insert!(%Levelup.Persons.Person{firstname: "Jane", lastname: "Doe", identifier: "JD01"},
   prefix: Triplex.to_prefix("acme")
 )
 
-Repo.insert!(%Levelup.Positions.Position{name: "Acme position 2"},
+Repo.insert!(%Levelup.Persons.Person{firstname: "John", lastname: "Doe", identifier: "JD02"},
   prefix: Triplex.to_prefix("acme")
 )
 
-Repo.insert!(%Levelup.Positions.Position{name: "Acme position 3"},
+Repo.insert!(%Levelup.Persons.Person{firstname: "Jake", lastname: "Doe", identifier: "JD03"},
   prefix: Triplex.to_prefix("acme")
 )
 
-Repo.insert!(%Levelup.Positions.Position{name: "Acme position 4"},
+Repo.insert!(%Levelup.Positions.Position{name: "Developer"},
   prefix: Triplex.to_prefix("acme")
 )
 
-Repo.insert!(%Levelup.Positions.Position{name: "Acme position 5"},
+Repo.insert!(%Levelup.Positions.Position{name: "Project manager"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Designer"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Devops"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Positions.Position{name: "Product owner"},
   prefix: Triplex.to_prefix("acme")
 )
 
@@ -67,4 +79,36 @@ Repo.insert!(%Levelup.Positions.Position{name: "Emca position 4"},
 
 Repo.insert!(%Levelup.Positions.Position{name: "Emca position 5"},
   prefix: Triplex.to_prefix("emca")
+)
+
+Repo.insert!(%Levelup.Competences.Competence{name: "Communication"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Competence{name: "React"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Competence{name: "Photoshop"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Competence{name: "Management"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Competence{name: "PHP"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Level{name: "Junior"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Level{name: "Advanced"},
+  prefix: Triplex.to_prefix("acme")
+)
+
+Repo.insert!(%Levelup.Competences.Level{name: "Expert"},
+  prefix: Triplex.to_prefix("acme")
 )
