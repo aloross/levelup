@@ -50,3 +50,58 @@ msgstr "personnes"
 #: lib/levelup_web/templates/layout/app.html.eex:29
 msgid "positions"
 msgstr "postes"
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:10
+msgid "Actions"
+msgstr ""
+
+#, elixir-format, fuzzy
+#: lib/levelup_web/templates/person/show.html.eex:44
+msgid "Add competence"
+msgstr "competences"
+
+#, elixir-format, fuzzy
+#: lib/levelup_web/templates/person/show.html.eex:18
+msgid "Competences"
+msgstr "competences"
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:23
+msgid "Delete"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:22
+msgid "Edit"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:7
+msgid "Firstname"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:9
+msgid "Identifier"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:8
+msgid "Lastname"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:30
+msgid "New Person"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:21
+msgid "Show"
+msgstr ""
+
+#, elixir-format
+#: lib/levelup_web/templates/person/index.html.eex:2
+msgid "Listing Persons"
+msgstr ""

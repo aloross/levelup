@@ -68,9 +68,10 @@ defmodule Levelup.Competences do
 
   alias Levelup.Competences.PositionCompetenceLevel
 
-  def list_positions_competences_levels(tenant) do
-    Repo.all(PositionCompetenceLevel, prefix: Triplex.to_prefix(tenant))
-    |> Repo.preload([:position, :competence, :level])
+  def list_positions_competences_levels(position, tenant) do
+    PositionCompetenceLevel
+    |> where([pcl], pcl.position_id == ^position.id)
+    |> Repo.all(prefix: Triplex.to_prefix(tenant))
   end
 
   def get_position_competence_level!(id, tenant) do
@@ -109,9 +110,8 @@ defmodule Levelup.Competences do
 
   def list_persons_competences_levels(person, tenant) do
     PersonCompetenceLevel
-    |> where([t], t.person_id == ^person.id)
+    |> where([pcl], pcl.person_id == ^person.id)
     |> Repo.all(prefix: Triplex.to_prefix(tenant))
-    |> Repo.preload([:person, :competence, :level])
   end
 
   def get_person_competence_level!(id, tenant) do

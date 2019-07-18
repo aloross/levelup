@@ -8,7 +8,10 @@ defmodule Levelup.Positions do
     Repo.all(Position, prefix: Triplex.to_prefix(tenant))
   end
 
-  def get_position!(id, tenant), do: Repo.get!(Position, id, prefix: Triplex.to_prefix(tenant))
+  def get_position!(id, tenant) do
+    Repo.get!(Position, id, prefix: Triplex.to_prefix(tenant))
+    |> Repo.preload(competences: :competence, competences: :level)
+  end
 
   def create_position(attrs \\ %{}, tenant) do
     %Position{}

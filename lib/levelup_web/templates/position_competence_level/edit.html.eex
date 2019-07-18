@@ -1,0 +1,5 @@
+<h1>Edit Position competence level</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.position_competence_path(@conn, :update, @position, @position_competence_level)) %>
+
+<span><%= link "Back", to: Routes.position_path(@conn, :show, @position) %></span>

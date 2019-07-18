@@ -1,13 +1,53 @@
-<h1>Show Position</h1>
+<section class="container">
+  <div class="d-flex align-items-center mb-3">
+    <h1><%= @position.name %></h1>
+    <%= link gettext("Back"), to: Routes.position_path(@conn, :index), class: "ml-auto" %>
+  </div>
+  <div class="d-flex align-items-center">
+    <h2><%= gettext("Competences") %></h2>
+    <%= link(
+      gettext("Add competence"),
+      to: Routes.position_competence_path(@conn, :new, @position),
+      class: "btn btn-primary ml-auto btn-sm"
+    ) %>
+  </div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th><%= gettext("Competence") %></th>
+        <th><%= gettext("Level") %></th>
+        <th><%= gettext("Edit") %></th>
+        <th><%= gettext("Delete") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for competence <- @position.competences do %>
+      <tr>
+        <td><%= competence.competence.name %></td>
+        <td><%= competence.level.name %></td>
+        <td>
+          <%= link gettext("Edit"), to: Routes.position_competence_path(@conn, :edit, @position, competence) %>
+        </td>
+        <td>
+           <%= link(
+              gettext("Delete"),
+              to: Routes.position_competence_path(@conn, :delete, @position, competence),
+              method: :delete, data: [confirm: gettext("Are you sure?")],
+              class: "btn btn-danger btn-sm"
+            ) %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @position.name %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.position_path(@conn, :edit, @position) %></span>
-<span><%= link "Back", to: Routes.position_path(@conn, :index) %></span>
+  <div class="d-flex justify-content-end mt-5">
+    <%= link(
+      gettext("Delete"),
+      to: Routes.position_path(@conn, :delete, @position),
+      method: :delete, data: [confirm: gettext("Are you sure?")],
+      class: "btn btn-danger ml-2"
+    ) %>
+    <%= link gettext("Edit"), to: Routes.position_path(@conn, :edit, @position), class: "btn btn-primary ml-2" %>
+  </div>
+</section>

@@ -42,7 +42,11 @@ defmodule LevelupWeb.Router do
   scope "/", LevelupWeb do
     pipe_through [:browser, :auth, :ensure_auth]
 
-    resources "/positions", PositionController
+    resources "/positions", PositionController do
+      resources "/competences", PositionCompetenceLevelController,
+        name: :competence,
+        except: [:show, :index]
+    end
 
     resources "/persons", PersonController do
       resources "/competences", PersonCompetenceLevelController,
