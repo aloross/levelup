@@ -8,7 +8,10 @@ defmodule Levelup.Persons do
     Repo.all(Person, prefix: Triplex.to_prefix(tenant))
   end
 
-  def get_person!(id, tenant), do: Repo.get!(Person, id, prefix: Triplex.to_prefix(tenant))
+  def get_person!(id, tenant) do
+    Repo.get!(Person, id, prefix: Triplex.to_prefix(tenant))
+    |> Repo.preload(competences: :competence, competences: :level)
+  end
 
   def create_person(attrs \\ %{}, tenant) do
     %Person{}

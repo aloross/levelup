@@ -4,6 +4,13 @@ defmodule Levelup.Competences do
 
   alias Levelup.Competences.Competence
 
+  def list_competence_and_level_options(tenant) do
+    competences = list_competences(tenant) |> Enum.map(&{&1.name, &1.id})
+    levels = list_levels(tenant) |> Enum.map(&{&1.name, &1.id})
+
+    %{competences: competences, levels: levels}
+  end
+
   def list_competences(tenant) do
     Repo.all(Competence, prefix: Triplex.to_prefix(tenant))
   end
@@ -100,8 +107,10 @@ defmodule Levelup.Competences do
 
   alias Levelup.Competences.PersonCompetenceLevel
 
-  def list_persons_competences_levels(tenant) do
-    Repo.all(PersonCompetenceLevel, prefix: Triplex.to_prefix(tenant))
+  def list_persons_competences_levels(person, tenant) do
+    PersonCompetenceLevel
+    |> where([t], t.person_id == ^person.id)
+    |> Repo.all(prefix: Triplex.to_prefix(tenant))
     |> Repo.preload([:person, :competence, :level])
   end
 

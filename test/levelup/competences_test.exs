@@ -230,8 +230,12 @@ defmodule Levelup.CompetencesTest do
     test "list_persons_competences_levels/0 returns all persons_competences_levels", %{
       tenant: tenant
     } do
+      person = insert(:person)
       person_competence_level = insert(:person_competence_level)
-      assert Competences.list_persons_competences_levels(tenant) == [person_competence_level]
+
+      assert Competences.list_persons_competences_levels(person, tenant) == [
+               person_competence_level
+             ]
     end
 
     test "get_person_competence_level!/1 returns the person_competence_level with given id", %{

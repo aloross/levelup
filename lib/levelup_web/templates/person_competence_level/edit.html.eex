@@ -1,0 +1,5 @@
+<h1>Edit Person competence level</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.person_competence_path(@conn, :update, @person, @person_competence_level)) %>
+
+<span><%= link "Back", to: Routes.person_path(@conn, :show, @person) %></span>

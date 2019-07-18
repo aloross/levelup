@@ -1,6 +1,5 @@
 <section class="container">
   <h1>Show Person</h1>
-
   <ul>
     <li>
       <strong>Firstname:</strong>
@@ -16,6 +15,31 @@
     </li>
   </ul>
 
+  <h1>Listing Persons competences levels</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Competence</th>
+          <th>Level</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <%= for competence <- @person.competences do %>
+          <tr>
+            <td><%= competence.competence.name %></td>
+            <td><%= competence.level.name %></td>
+            <td>
+              <%= link "Edit", to: Routes.person_competence_path(@conn, :edit, @person, competence) %>
+              <%= link "Delete", to: Routes.person_competence_path(@conn, :delete,  @person, competence), method: :delete, data: [confirm: "Are you sure?"] %>
+            </td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+
   <%= link "Edit", to: Routes.person_path(@conn, :edit, @person) %>
+  <%= link gettext("Add competence"), to: Routes.person_competence_path(@conn, :new, @person) %>
   <%= link "Back", to: Routes.person_path(@conn, :index) %>
 </section>

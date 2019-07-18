@@ -1,10 +1,13 @@
 <h1>Listing Competences</h1>
 
+<div>
+Manage levels : <%= link("levels", to: Routes.level_path(@conn, :index)) %>
+</div>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
-
       <th></th>
     </tr>
   </thead>
