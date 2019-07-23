@@ -1,3 +1,59 @@
+defmodule SeedsHelper do
+  alias Levelup.Repo
+
+  def create_level(name, tenant \\ "acme") do
+    Repo.insert!(%Levelup.Competences.Level{name: name},
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+
+  def create_person(firstname, lastname, identifier, position_id, tenant \\ "acme") do
+    Repo.insert!(
+      %Levelup.Persons.Person{
+        firstname: firstname,
+        lastname: lastname,
+        identifier: identifier,
+        position_id: position_id
+      },
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+
+  def create_position(name, tenant \\ "acme") do
+    Repo.insert!(%Levelup.Positions.Position{name: name},
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+
+  def create_competence(name, tenant \\ "acme") do
+    Repo.insert!(%Levelup.Competences.Competence{name: name},
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+
+  def add_competence_to_person(person_id, competence_id, level_id, tenant \\ "acme") do
+    Repo.insert!(
+      %Levelup.Competences.PersonCompetenceLevel{
+        person_id: person_id,
+        competence_id: competence_id,
+        level_id: level_id
+      },
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+
+  def add_competence_to_position(position_id, competence_id, level_id, tenant \\ "acme") do
+    Repo.insert!(
+      %Levelup.Competences.PositionCompetenceLevel{
+        position_id: position_id,
+        competence_id: competence_id,
+        level_id: level_id
+      },
+      prefix: Triplex.to_prefix(tenant)
+    )
+  end
+end
+
 alias Levelup.Repo
 alias Levelup.Accounts
 
@@ -14,7 +70,7 @@ Triplex.create("acme")
 Triplex.create("emca")
 
 Accounts.create_credential(%{
-  username: "adrien",
+  username: "admin",
   password: "password",
   tenant_id: acme.id,
   role: "admin"
@@ -27,88 +83,50 @@ Accounts.create_credential(%{
   role: "manager"
 })
 
+Accounts.create_credential(%{
+  username: "adrien",
+  password: "password",
+  tenant_id: acme.id,
+  role: "manager"
+})
+
 Accounts.create_credential(%{username: "bobby", password: "password", tenant_id: emca.id})
 
-Repo.insert!(%Levelup.Persons.Person{firstname: "Jane", lastname: "Doe", identifier: "JD01"},
-  prefix: Triplex.to_prefix("acme")
-)
+developer = SeedsHelper.create_position("Developer")
+project_manager = SeedsHelper.create_position("Project manager")
+designer = SeedsHelper.create_position("Designer")
+devops = SeedsHelper.create_position("Devops")
+product_owner = SeedsHelper.create_position("Product owner")
 
-Repo.insert!(%Levelup.Persons.Person{firstname: "John", lastname: "Doe", identifier: "JD02"},
-  prefix: Triplex.to_prefix("acme")
-)
+jane = SeedsHelper.create_person("Jane", "Doe", "JD01", developer.id)
+john = SeedsHelper.create_person("John", "Doe", "JD02", product_owner.id)
+jake = SeedsHelper.create_person("Jake", "Doe", "JD03", developer.id)
 
-Repo.insert!(%Levelup.Persons.Person{firstname: "Jake", lastname: "Doe", identifier: "JD03"},
-  prefix: Triplex.to_prefix("acme")
-)
+SeedsHelper.create_position("Emca position 1", "emca")
+SeedsHelper.create_position("Emca position 2", "emca")
+SeedsHelper.create_position("Emca position 3", "emca")
+SeedsHelper.create_position("Emca position 4", "emca")
+SeedsHelper.create_position("Emca position 5", "emca")
 
-Repo.insert!(%Levelup.Positions.Position{name: "Developer"},
-  prefix: Triplex.to_prefix("acme")
-)
+communication = SeedsHelper.create_competence("Communication")
+react = SeedsHelper.create_competence("React")
+photoshop = SeedsHelper.create_competence("Photoshop")
+management = SeedsHelper.create_competence("Management")
+php = SeedsHelper.create_competence("PHP")
 
-Repo.insert!(%Levelup.Positions.Position{name: "Project manager"},
-  prefix: Triplex.to_prefix("acme")
-)
+junior = SeedsHelper.create_level("Junior")
+advanced = SeedsHelper.create_level("Advanced")
+expert = SeedsHelper.create_level("Expert")
 
-Repo.insert!(%Levelup.Positions.Position{name: "Designer"},
-  prefix: Triplex.to_prefix("acme")
-)
+SeedsHelper.add_competence_to_person(jane.id, photoshop.id, junior.id)
+SeedsHelper.add_competence_to_person(jane.id, php.id, advanced.id)
+SeedsHelper.add_competence_to_person(john.id, communication.id, expert.id)
+SeedsHelper.add_competence_to_person(john.id, management.id, junior.id)
+SeedsHelper.add_competence_to_person(jake.id, react.id, expert.id)
 
-Repo.insert!(%Levelup.Positions.Position{name: "Devops"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Product owner"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Emca position 1"},
-  prefix: Triplex.to_prefix("emca")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Emca position 2"},
-  prefix: Triplex.to_prefix("emca")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Emca position 3"},
-  prefix: Triplex.to_prefix("emca")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Emca position 4"},
-  prefix: Triplex.to_prefix("emca")
-)
-
-Repo.insert!(%Levelup.Positions.Position{name: "Emca position 5"},
-  prefix: Triplex.to_prefix("emca")
-)
-
-Repo.insert!(%Levelup.Competences.Competence{name: "Communication"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Competence{name: "React"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Competence{name: "Photoshop"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Competence{name: "Management"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Competence{name: "PHP"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Level{name: "Junior"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Level{name: "Advanced"},
-  prefix: Triplex.to_prefix("acme")
-)
-
-Repo.insert!(%Levelup.Competences.Level{name: "Expert"},
-  prefix: Triplex.to_prefix("acme")
-)
+SeedsHelper.add_competence_to_position(developer.id, react.id, junior.id)
+SeedsHelper.add_competence_to_position(developer.id, php.id, junior.id)
+SeedsHelper.add_competence_to_position(project_manager.id, management.id, expert.id)
+SeedsHelper.add_competence_to_position(designer.id, photoshop.id, advanced.id)
+SeedsHelper.add_competence_to_position(product_owner.id, communication.id, expert.id)
+SeedsHelper.add_competence_to_position(product_owner.id, management.id, advanced.id)
