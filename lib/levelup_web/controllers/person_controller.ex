@@ -28,7 +28,8 @@ defmodule LevelupWeb.PersonController do
 
   def show(conn, %{"id" => id}) do
     person = Persons.get_person!(id, conn.assigns.current_tenant)
-    render(conn, "show.html", person: person)
+    matching_positions = Persons.list_matching_positions(id, conn.assigns.current_tenant)
+    render(conn, "show.html", person: person, matching_positions: matching_positions)
   end
 
   def edit(conn, %{"id" => id}) do

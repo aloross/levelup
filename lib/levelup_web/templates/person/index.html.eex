@@ -7,6 +7,7 @@
         <th><%= gettext("Firstname") %></th>
         <th><%= gettext("Lastname") %></th>
         <th><%= gettext("Identifier") %></th>
+        <th><%= gettext("Position") %></th>
         <th><%= gettext("Details") %></th>
       </tr>
     </thead>
@@ -16,6 +17,7 @@
         <td><%= person.firstname %></td>
         <td><%= person.lastname %></td>
         <td><%= person.identifier %></td>
+        <td><%= if person.position, do: link(person.position.name, to: Routes.position_path(@conn, :show, person.position))  %></td>
         <td>
           <%= link gettext("Show"), to: Routes.person_path(@conn, :show, person) %>
         </td>

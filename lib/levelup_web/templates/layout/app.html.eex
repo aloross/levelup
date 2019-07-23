@@ -37,30 +37,36 @@
                     </a>
                     <div class="dropdown-menu">
                       <%= link(
-                        gettext("persons"),
+                        gettext("Persons"),
                         to: Routes.person_path(@conn, :index),
                         class: "dropdown-item"
                       ) %>
                       <%= link(
-                        gettext("positions"),
+                        gettext("Positions"),
                         to: Routes.position_path(@conn, :index),
                         class: "dropdown-item"
                       ) %>
                       <%= link(
-                        gettext("competences"),
+                        gettext("Competences"),
                         to: Routes.competence_path(@conn, :index),
+                        class: "dropdown-item"
+                      ) %>
+                      <div class="dropdown-divider"></div>
+                      <%= link(
+                        gettext("TODO"),
+                        to: "#",
                         class: "dropdown-item"
                       ) %>
                     </div>
                   </li>
                   <%= if @is_manager do %>
                     <li class="nav-item">
-                      <%= link(gettext("credentials"), to: Routes.credential_path(@conn, :index), class: "nav-link") %>
+                      <%= link(gettext("Credentials"), to: Routes.credential_path(@conn, :index), class: "nav-link") %>
                     </li>
                   <% end %>
                   <%= if @is_admin do %>
                     <li class="nav-item">
-                      <%= link(gettext("admin"), to: Routes.admin_path(@conn, :index), class: "nav-link") %>
+                      <%= link(gettext("Admin"), to: Routes.admin_path(@conn, :index), class: "nav-link") %>
                     </li>
                   <% end %>
                 <% end %>
@@ -68,9 +74,9 @@
               <div class="d-flex ml-auto mt-4 mt-md-0 align-items-center justify-content-between justify-content-md-start">
                 <%= if @logged_in do %>
                   <div><%= @current_user.username %>&nbsp;(<%= @current_user.tenant.title %>)</div>
-                  <%= link(gettext("logout"), to: Routes.session_path(@conn, :logout), method: :post, class: "ml-3 btn btn-sm btn-primary") %>
+                  <%= link(gettext("Logout"), to: Routes.session_path(@conn, :logout), method: :post, class: "ml-3 btn btn-sm btn-primary") %>
                 <% else %>
-                  <%= link(gettext("login"), to: Routes.session_path(@conn, :login)) %>
+                  <%= link(gettext("Login"), to: Routes.session_path(@conn, :login)) %>
                 <% end %>
               </div>
             </div>
