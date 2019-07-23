@@ -10,7 +10,7 @@
   <body>
     <header>
       <section>
-        <nav role="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav role="navigation" class="navbar navbar-expand-md navbar-light bg-light">
           <div class="container">
             <a class="navbar-brand" href="/">Levelup</a>
             <button 
@@ -25,21 +25,50 @@
             <div class="collapse navbar-collapse" id="navbarToggler">
               <ul class="navbar-nav">
                 <%= if @logged_in do %>
-                  <li class="nav-link"><%= link(gettext("persons"), to: Routes.person_path(@conn, :index)) %></li>
-                  <li class="nav-link"><%= link(gettext("positions"), to: Routes.position_path(@conn, :index)) %></li>
-                  <li class="nav-link"><%= link(gettext("competences"), to: Routes.competence_path(@conn, :index)) %></li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"
+                      data-toggle="dropdown"
+                      href="#"
+                      role="button"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <%= gettext("Skills") %>
+                    </a>
+                    <div class="dropdown-menu">
+                      <%= link(
+                        gettext("persons"),
+                        to: Routes.person_path(@conn, :index),
+                        class: "dropdown-item"
+                      ) %>
+                      <%= link(
+                        gettext("positions"),
+                        to: Routes.position_path(@conn, :index),
+                        class: "dropdown-item"
+                      ) %>
+                      <%= link(
+                        gettext("competences"),
+                        to: Routes.competence_path(@conn, :index),
+                        class: "dropdown-item"
+                      ) %>
+                    </div>
+                  </li>
                   <%= if @is_manager do %>
-                    <li class="nav-link"><%= link(gettext("credentials"), to: Routes.credential_path(@conn, :index)) %></li>
+                    <li class="nav-item">
+                      <%= link(gettext("credentials"), to: Routes.credential_path(@conn, :index), class: "nav-link") %>
+                    </li>
                   <% end %>
                   <%= if @is_admin do %>
-                    <li class="nav-link"><%= link(gettext("admin"), to: Routes.admin_path(@conn, :index)) %></li>
+                    <li class="nav-item">
+                      <%= link(gettext("admin"), to: Routes.admin_path(@conn, :index), class: "nav-link") %>
+                    </li>
                   <% end %>
                 <% end %>
               </ul>
-              <div class="d-flex ml-auto">
+              <div class="d-flex ml-auto mt-4 mt-md-0 align-items-center justify-content-between justify-content-md-start">
                 <%= if @logged_in do %>
-                  <%= @current_user.username %>&nbsp;(<%= @current_user.role %>)&nbsp;|&nbsp;<%= @current_user.tenant.title %>
-                  <%= link(gettext("logout"), to: Routes.session_path(@conn, :logout), method: :post) %>
+                  <div><%= @current_user.username %>&nbsp;(<%= @current_user.tenant.title %>)</div>
+                  <%= link(gettext("logout"), to: Routes.session_path(@conn, :logout), method: :post, class: "ml-3 btn btn-sm btn-primary") %>
                 <% else %>
                   <%= link(gettext("login"), to: Routes.session_path(@conn, :login)) %>
                 <% end %>
