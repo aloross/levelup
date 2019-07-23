@@ -1,26 +1,26 @@
-<h1>Listing Levels</h1>
+<section class="container">
+  <h1><%= gettext("Levels") %></h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("Details") %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for level <- @levels do %>
+      <tr>
+        <td><%= level.name %></td>
+        <td>
+          <%= link gettext("Show"), to: Routes.level_path(@conn, :show, level) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for level <- @levels do %>
-    <tr>
-      <td><%= level.name %></td>
-
-      <td>
-        <%= link "Show", to: Routes.level_path(@conn, :show, level) %>
-        <%= link "Edit", to: Routes.level_path(@conn, :edit, level) %>
-        <%= link "Delete", to: Routes.level_path(@conn, :delete, level), method: :delete, data: [confirm: "Are you sure?"] %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Level", to: Routes.level_path(@conn, :new) %></span>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link gettext("New level"), to: Routes.level_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
+</section>

@@ -3,8 +3,8 @@
 
   <div class="row">
     <%= form_for @changeset, @action, [class: "col-md-6 offset-md-3"], fn f -> %>
-      <%= input f, :username %>
-      <%= input f, :password %>
+      <%= bt_input f, :username %>
+      <%= bt_input f, :password %>
 
       <%= submit "Submit", class: "btn btn-primary" %>
     <% end %>

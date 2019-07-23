@@ -136,8 +136,10 @@ defmodule Levelup.CompetencesTest do
     test "list_positions_competences_levels/0 returns all positions_competences_levels", %{
       tenant: tenant
     } do
-      position_competence_level = insert(:position_competence_level)
-      assert Competences.list_positions_competences_levels(tenant) == [position_competence_level]
+      position = insert(:position)
+      insert(:position_competence_level, %{position: position})
+
+      assert Enum.count(Competences.list_positions_competences_levels(position, tenant)) == 1
     end
 
     test "get_position_competence_level!/1 returns the position_competence_level with given id",
@@ -231,11 +233,9 @@ defmodule Levelup.CompetencesTest do
       tenant: tenant
     } do
       person = insert(:person)
-      person_competence_level = insert(:person_competence_level)
+      insert(:person_competence_level, %{person: person})
 
-      assert Competences.list_persons_competences_levels(person, tenant) == [
-               person_competence_level
-             ]
+      assert Enum.count(Competences.list_persons_competences_levels(person, tenant)) == 1
     end
 
     test "get_person_competence_level!/1 returns the person_competence_level with given id", %{

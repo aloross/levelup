@@ -1,5 +1,14 @@
-<h1>Edit Person competence level</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.person_competence_path(@conn, :update, @person, @person_competence_level)) %>
-
-<span><%= link "Back", to: Routes.person_path(@conn, :show, @person) %></span>
+<section class="container">
+  <div class="d-flex align-items-center mb-3">
+    <h1><%= gettext("Edit competence") %></h1>
+    <%= link gettext("Back"), to: Routes.person_path(@conn, :show, @person), class: "ml-auto" %>
+  </div>
+  <%= render(
+    "form.html",
+    Map.put(
+      assigns,
+      :action,
+      Routes.person_competence_path(@conn, :update, @person, @person_competence_level)
+    )
+  ) %>
+</section>

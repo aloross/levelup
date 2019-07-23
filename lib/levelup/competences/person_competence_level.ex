@@ -18,5 +18,8 @@ defmodule Levelup.Competences.PersonCompetenceLevel do
     person_competence_level
     |> cast(attrs, [:person_id, :competence_id, :level_id])
     |> validate_required([:person_id, :competence_id])
+    |> foreign_key_constraint(:person_id)
+    |> foreign_key_constraint(:competence_id)
+    |> foreign_key_constraint(:level_id)
   end
 end

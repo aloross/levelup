@@ -26,7 +26,7 @@ defmodule Levelup.PersonsTest do
     end
 
     test "get_person!/1 returns the person with given id", %{tenant: tenant} do
-      person = insert(:person)
+      person = insert(:person) |> Repo.preload(:competences)
       assert Persons.get_person!(person.id, tenant) == person
     end
 
@@ -51,7 +51,7 @@ defmodule Levelup.PersonsTest do
     end
 
     test "update_person/2 with valid data updates the person", %{tenant: tenant} do
-      person = insert(:person)
+      person = insert(:person) |> Repo.preload(:competences)
       assert {:ok, %Person{} = person} = Persons.update_person(person, @update_attrs, tenant)
       assert person.firstname == "some updated firstname"
       assert person.identifier == "some updated identifier"
@@ -59,7 +59,7 @@ defmodule Levelup.PersonsTest do
     end
 
     test "update_person/2 with invalid data returns error changeset", %{tenant: tenant} do
-      person = insert(:person)
+      person = insert(:person) |> Repo.preload(:competences)
       assert {:error, %Ecto.Changeset{}} = Persons.update_person(person, @invalid_attrs, tenant)
       assert person == Persons.get_person!(person.id, tenant)
     end

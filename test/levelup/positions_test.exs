@@ -18,7 +18,8 @@ defmodule Levelup.PositionsTest do
     end
 
     test "get_position!/1 returns the position with given id", %{tenant: tenant} do
-      position = insert(:position)
+      position = insert(:position) |> Repo.preload(:competences)
+
       assert Positions.get_position!(position.id, tenant) == position
     end
 
@@ -32,7 +33,7 @@ defmodule Levelup.PositionsTest do
     end
 
     test "update_position/2 with valid data updates the position", %{tenant: tenant} do
-      position = insert(:position)
+      position = insert(:position) |> Repo.preload(:competences)
 
       assert {:ok, %Position{} = position} =
                Positions.update_position(position, @update_attrs, tenant)
@@ -41,7 +42,7 @@ defmodule Levelup.PositionsTest do
     end
 
     test "update_position/2 with invalid data returns error changeset", %{tenant: tenant} do
-      position = insert(:position)
+      position = insert(:position) |> Repo.preload(:competences)
 
       assert {:error, %Ecto.Changeset{}} =
                Positions.update_position(position, @invalid_attrs, tenant)

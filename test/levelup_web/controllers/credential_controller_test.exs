@@ -55,7 +55,7 @@ defmodule LevelupWeb.CredentialControllerTest do
     test "lists all credentials", %{conn: conn} do
       conn = get(conn, Routes.credential_path(conn, :index))
 
-      assert html_response(conn, 200) =~ "Listing Credentials"
+      assert html_response(conn, 200) =~ "Credentials"
     end
   end
 
@@ -64,7 +64,7 @@ defmodule LevelupWeb.CredentialControllerTest do
 
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.credential_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Credential"
+      assert html_response(conn, 200) =~ "New credential"
     end
   end
 
@@ -88,7 +88,7 @@ defmodule LevelupWeb.CredentialControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.credential_path(conn, :create), credential: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Credential"
+      assert html_response(conn, 200) =~ "New credential"
     end
   end
 
@@ -97,7 +97,7 @@ defmodule LevelupWeb.CredentialControllerTest do
 
     test "renders form for editing chosen credential", %{conn: conn, credential: credential} do
       conn = get(conn, Routes.credential_path(conn, :edit, credential))
-      assert html_response(conn, 200) =~ "Edit Credential"
+      assert html_response(conn, 200) =~ "Edit #{credential.username}"
     end
   end
 
@@ -115,7 +115,7 @@ defmodule LevelupWeb.CredentialControllerTest do
       conn =
         put(conn, Routes.credential_path(conn, :update, credential), credential: @invalid_attrs)
 
-      assert html_response(conn, 200) =~ "Edit Credential"
+      assert html_response(conn, 200) =~ "Edit #{credential.username}"
     end
   end
 

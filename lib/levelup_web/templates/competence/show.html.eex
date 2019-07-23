@@ -1,13 +1,15 @@
-<h1>Show Competence</h1>
-
-<ul>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @competence.name %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.competence_path(@conn, :edit, @competence) %></span>
-<span><%= link "Back", to: Routes.competence_path(@conn, :index) %></span>
+<section class="container">
+  <div class="d-flex align-items-center mb-3">
+    <h1><%= @competence.name %></h1>
+    <%= link gettext("Back"), to: Routes.competence_path(@conn, :index), class: "ml-auto" %>
+  </div>
+  <div class="d-flex justify-content-between mt-3">
+    <%= link(
+      gettext("Delete"),
+      to: Routes.competence_path(@conn, :delete, @competence),
+      method: :delete, data: [confirm: gettext("Are you sure?")],
+      class: "btn btn-danger"
+    ) %>
+    <%= link gettext("Edit"), to: Routes.competence_path(@conn, :edit, @competence), class: "btn btn-primary" %>
+  </div>
+</section>

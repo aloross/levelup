@@ -1,5 +1,14 @@
-<h1>New Position</h1>
-
-<%= render "form.html", Map.put(assigns, :action, Routes.position_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.position_path(@conn, :index) %></span>
+<section class="container">
+  <div class="d-flex align-items-center mb-3">
+    <h1><%= gettext("New position") %></h1>
+    <%= link gettext("Back"), to: Routes.position_path(@conn, :index), class: "ml-auto" %>
+  </div>
+  <%= render(
+    "form.html",
+    Map.put(
+      assigns,
+      :action,
+      Routes.position_path(@conn, :create)
+    )
+  ) %>
+</section>

@@ -4,27 +4,22 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
 
   import Levelup.TenantFactory
 
-  @invalid_attrs %{}
+  @invalid_attrs %{
+    person_id: "i_do_not_exists"
+  }
 
   setup_all [:init_person]
   setup [:as_user]
 
-  describe "index" do
-    test "lists all persons_competences_levels", %{conn: conn, person: person} do
-      conn = get(conn, Routes.person_competence_path(conn, :index, person))
-      assert html_response(conn, 200) =~ "Listing Persons competences levels"
-    end
-  end
-
   describe "new person_competence_level" do
     test "renders form", %{conn: conn, person: person} do
       conn = get(conn, Routes.person_competence_path(conn, :new, person))
-      assert html_response(conn, 200) =~ "New Person competence level"
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
   describe "create person_competence_level" do
-    test "redirects to show when data is valid", %{conn: conn, person: person} do
+    test "redirects to parent person when data is valid", %{conn: conn, person: person} do
       competence = insert(:competence)
 
       create_attrs = %{
@@ -38,7 +33,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
         )
 
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.person_competence_path(conn, :show, person, id)
+      assert redirected_to(conn) == Routes.person_path(conn, :show, person)
     end
 
     test "renders errors when data is invalid", %{conn: conn, person: person} do
@@ -47,7 +42,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
           person_competence_level: @invalid_attrs
         )
 
-      assert html_response(conn, 200) =~ "New Person competence level"
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
@@ -65,7 +60,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
           Routes.person_competence_path(conn, :edit, person, person_competence_level)
         )
 
-      assert html_response(conn, 200) =~ "Edit Person competence level"
+      assert html_response(conn, 200) =~ "Edit competence"
     end
   end
 
@@ -91,7 +86,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
         )
 
       assert redirected_to(conn) ==
-               Routes.person_competence_path(conn, :show, person, person_competence_level)
+               Routes.person_path(conn, :show, person)
     end
 
     test "renders errors when data is invalid", %{
@@ -106,7 +101,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
           person_competence_level: @invalid_attrs
         )
 
-      assert html_response(conn, 200) =~ "Edit Person competence level"
+      assert html_response(conn, 200) =~ "Edit competence"
     end
   end
 
@@ -124,7 +119,7 @@ defmodule LevelupWeb.PersonCompetenceLevelControllerTest do
           Routes.person_competence_path(conn, :delete, person, person_competence_level)
         )
 
-      assert redirected_to(conn) == Routes.person_competence_path(conn, :index, person)
+      assert redirected_to(conn) == Routes.person_path(conn, :show, person)
     end
   end
 

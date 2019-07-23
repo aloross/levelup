@@ -48,7 +48,7 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "lists all positions", %{conn: conn} do
       conn = get(conn, Routes.position_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Positions"
+      assert html_response(conn, 200) =~ "Positions"
     end
   end
 
@@ -57,7 +57,7 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.position_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Position"
+      assert html_response(conn, 200) =~ "New position"
     end
   end
 
@@ -73,7 +73,7 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.position_path(conn, :create), position: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Position"
+      assert html_response(conn, 200) =~ "New position"
     end
   end
 
@@ -82,7 +82,7 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders form for editing chosen position", %{conn: conn, position: position} do
       conn = get(conn, Routes.position_path(conn, :edit, position))
-      assert html_response(conn, 200) =~ "Edit Position"
+      assert html_response(conn, 200) =~ "Edit #{position.name}"
     end
   end
 
@@ -96,7 +96,7 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, position: position} do
       conn = put(conn, Routes.position_path(conn, :update, position), position: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Position"
+      assert html_response(conn, 200) =~ "Edit #{position.name}"
     end
   end
 

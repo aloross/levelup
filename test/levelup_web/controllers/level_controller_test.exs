@@ -48,7 +48,7 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "lists all levels", %{conn: conn} do
       conn = get(conn, Routes.level_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Levels"
+      assert html_response(conn, 200) =~ "Levels"
     end
   end
 
@@ -57,7 +57,7 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.level_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Level"
+      assert html_response(conn, 200) =~ "New level"
     end
   end
 
@@ -73,7 +73,7 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.level_path(conn, :create), level: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Level"
+      assert html_response(conn, 200) =~ "New level"
     end
   end
 
@@ -82,7 +82,7 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders form for editing chosen level", %{conn: conn, level: level} do
       conn = get(conn, Routes.level_path(conn, :edit, level))
-      assert html_response(conn, 200) =~ "Edit Level"
+      assert html_response(conn, 200) =~ "Edit #{level.name}"
     end
   end
 
@@ -96,7 +96,7 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, level: level} do
       conn = put(conn, Routes.level_path(conn, :update, level), level: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Level"
+      assert html_response(conn, 200) =~ "Edit #{level.name}"
     end
   end
 

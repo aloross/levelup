@@ -19,6 +19,7 @@
     <% end %>
     </tbody>
   </table>
-
-  <%= link gettext("New Position"), to: Routes.position_path(@conn, :new), class: "btn btn-primary" %>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link gettext("New position"), to: Routes.position_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
 </section>

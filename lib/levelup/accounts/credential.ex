@@ -16,6 +16,7 @@ defmodule Levelup.Accounts.Credential do
     credential
     |> cast(attrs, [:username, :password, :tenant_id, :role])
     |> validate_required([:username, :password, :tenant_id])
+    |> foreign_key_constraint(:tenant_id)
     |> put_password_hash()
   end
 

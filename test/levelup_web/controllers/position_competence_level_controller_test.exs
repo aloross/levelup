@@ -1,88 +1,136 @@
 defmodule LevelupWeb.PositionCompetenceLevelControllerTest do
   use LevelupWeb.ConnCase
+  use Levelup.TenantCase
 
-  alias Levelup.Competences
+  import Levelup.TenantFactory
 
-  @create_attrs %{}
-  @update_attrs %{}
-  @invalid_attrs %{}
+  @invalid_attrs %{
+    position_id: "i_do_not_exists"
+  }
 
-  def fixture(:position_competence_level) do
-    {:ok, position_competence_level} = Competences.create_position_competence_level(@create_attrs)
-    position_competence_level
-  end
-
-  describe "index" do
-    test "lists all positions_competences_levels", %{conn: conn} do
-      conn = get(conn, Routes.position_competence_level_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Positions competences levels"
-    end
-  end
+  setup_all [:init_position]
+  setup [:as_user]
 
   describe "new position_competence_level" do
-    test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.position_competence_level_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Position competence level"
+    test "renders form", %{conn: conn, position: position} do
+      conn = get(conn, Routes.position_competence_path(conn, :new, position))
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
   describe "create position_competence_level" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.position_competence_level_path(conn, :create), position_competence_level: @create_attrs)
+    test "redirects to parent position when data is valid", %{conn: conn, position: position} do
+      competence = insert(:competence)
+
+      create_attrs = %{
+        position_id: position.id,
+        competence_id: competence.id
+      }
+
+      conn =
+        post(conn, Routes.position_competence_path(conn, :create, position),
+          position_competence_level: create_attrs
+        )
 
       assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.position_competence_level_path(conn, :show, id)
-
-      conn = get(conn, Routes.position_competence_level_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Position competence level"
+      assert redirected_to(conn) == Routes.position_path(conn, :show, position)
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.position_competence_level_path(conn, :create), position_competence_level: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Position competence level"
+    test "renders errors when data is invalid", %{conn: conn, position: position} do
+      conn =
+        post(conn, Routes.position_competence_path(conn, :create, position),
+          position_competence_level: @invalid_attrs
+        )
+
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
   describe "edit position_competence_level" do
     setup [:create_position_competence_level]
 
-    test "renders form for editing chosen position_competence_level", %{conn: conn, position_competence_level: position_competence_level} do
-      conn = get(conn, Routes.position_competence_level_path(conn, :edit, position_competence_level))
-      assert html_response(conn, 200) =~ "Edit Position competence level"
+    test "renders form for editing chosen position_competence_level", %{
+      conn: conn,
+      position_competence_level: position_competence_level,
+      position: position
+    } do
+      conn =
+        get(
+          conn,
+          Routes.position_competence_path(conn, :edit, position, position_competence_level)
+        )
+
+      assert html_response(conn, 200) =~ "Edit competence"
     end
   end
 
   describe "update position_competence_level" do
     setup [:create_position_competence_level]
 
-    test "redirects when data is valid", %{conn: conn, position_competence_level: position_competence_level} do
-      conn = put(conn, Routes.position_competence_level_path(conn, :update, position_competence_level), position_competence_level: @update_attrs)
-      assert redirected_to(conn) == Routes.position_competence_level_path(conn, :show, position_competence_level)
+    test "redirects when data is valid", %{
+      conn: conn,
+      position_competence_level: position_competence_level,
+      position: position
+    } do
+      competence = insert(:competence)
 
-      conn = get(conn, Routes.position_competence_level_path(conn, :show, position_competence_level))
-      assert html_response(conn, 200)
+      update_attrs = %{
+        position_id: position.id,
+        competence_id: competence.id
+      }
+
+      conn =
+        put(
+          conn,
+          Routes.position_competence_path(conn, :update, position, position_competence_level),
+          position_competence_level: update_attrs
+        )
+
+      assert redirected_to(conn) ==
+               Routes.position_path(conn, :show, position)
     end
 
-    test "renders errors when data is invalid", %{conn: conn, position_competence_level: position_competence_level} do
-      conn = put(conn, Routes.position_competence_level_path(conn, :update, position_competence_level), position_competence_level: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Position competence level"
+    test "renders errors when data is invalid", %{
+      conn: conn,
+      position_competence_level: position_competence_level,
+      position: position
+    } do
+      conn =
+        put(
+          conn,
+          Routes.position_competence_path(conn, :update, position, position_competence_level),
+          position_competence_level: @invalid_attrs
+        )
+
+      assert html_response(conn, 200) =~ "Edit competence"
     end
   end
 
   describe "delete position_competence_level" do
     setup [:create_position_competence_level]
 
-    test "deletes chosen position_competence_level", %{conn: conn, position_competence_level: position_competence_level} do
-      conn = delete(conn, Routes.position_competence_level_path(conn, :delete, position_competence_level))
-      assert redirected_to(conn) == Routes.position_competence_level_path(conn, :index)
-      assert_error_sent 404, fn ->
-        get(conn, Routes.position_competence_level_path(conn, :show, position_competence_level))
-      end
+    test "deletes chosen position_competence_level", %{
+      conn: conn,
+      position_competence_level: position_competence_level,
+      position: position
+    } do
+      conn =
+        delete(
+          conn,
+          Routes.position_competence_path(conn, :delete, position, position_competence_level)
+        )
+
+      assert redirected_to(conn) == Routes.position_path(conn, :show, position)
     end
   end
 
+  defp init_position(_) do
+    position = insert(:position)
+    [position: position]
+  end
+
   defp create_position_competence_level(_) do
-    position_competence_level = fixture(:position_competence_level)
+    position_competence_level = insert(:position_competence_level)
     {:ok, position_competence_level: position_competence_level}
   end
 end

@@ -49,7 +49,7 @@ defmodule LevelupWeb.CompetenceControllerTest do
 
     test "lists all competences", %{conn: conn} do
       conn = get(conn, Routes.competence_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Competences"
+      assert html_response(conn, 200) =~ "Competences"
     end
   end
 
@@ -58,7 +58,7 @@ defmodule LevelupWeb.CompetenceControllerTest do
 
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.competence_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Competence"
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
@@ -74,7 +74,7 @@ defmodule LevelupWeb.CompetenceControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.competence_path(conn, :create), competence: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Competence"
+      assert html_response(conn, 200) =~ "New competence"
     end
   end
 
@@ -83,7 +83,7 @@ defmodule LevelupWeb.CompetenceControllerTest do
 
     test "renders form for editing chosen competence", %{conn: conn, competence: competence} do
       conn = get(conn, Routes.competence_path(conn, :edit, competence))
-      assert html_response(conn, 200) =~ "Edit Competence"
+      assert html_response(conn, 200) =~ "Edit #{competence.name}"
     end
   end
 
@@ -101,7 +101,7 @@ defmodule LevelupWeb.CompetenceControllerTest do
       conn =
         put(conn, Routes.competence_path(conn, :update, competence), competence: @invalid_attrs)
 
-      assert html_response(conn, 200) =~ "Edit Competence"
+      assert html_response(conn, 200) =~ "Edit #{competence.name}"
     end
   end
 

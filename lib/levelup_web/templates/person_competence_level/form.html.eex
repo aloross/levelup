@@ -1,21 +1,18 @@
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
+<div class="row">
+  <%= form_for @changeset, @action, [class: "col-md-6 offset-md-3"], fn f -> %>
+    <%= if @changeset.action do %>
+      <div class="alert alert-danger">
+        <p>Oops, something went wrong! Please check the errors below.</p>
+      </div>
+    <% end %>
+
+    <%= hidden_input f, :person_id, value: @person.id %>
+
+    <%= bt_select f, :competence_id, @competences %>
+    <%= bt_select f, :level_id , @levels%>
+
+    <div class="d-flex justify-content-end">
+      <%= submit "Save", class: "btn btn-primary"%>
     </div>
   <% end %>
-
-  <%= hidden_input f, :person_id, value: @person.id %>
-
-  <%= label f, :competence_id %>
-  <%= select f, :competence_id, @competences %>
-  <%= error_tag f, :competence_id %>
-
-  <%= label f, :level_id %>
-  <%= select f, :level_id, @levels %>
-  <%= error_tag f, :level_id %>
-
-  <div>
-    <%= submit "Save" %>
-  </div>
-<% end %>
+</div>

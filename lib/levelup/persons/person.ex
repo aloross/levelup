@@ -17,7 +17,8 @@ defmodule Levelup.Persons.Person do
   @doc false
   def changeset(person, attrs) do
     person
-    |> cast(attrs, [:firstname, :lastname, :identifier])
+    |> cast(attrs, [:firstname, :lastname, :identifier, :position_id])
     |> validate_required([:firstname, :lastname, :identifier])
+    |> foreign_key_constraint(:position_id)
   end
 end

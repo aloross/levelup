@@ -56,7 +56,7 @@ defmodule LevelupWeb.PersonControllerTest do
 
     test "lists all persons", %{conn: conn} do
       conn = get(conn, Routes.person_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Persons"
+      assert html_response(conn, 200) =~ "Persons"
     end
   end
 
@@ -65,7 +65,7 @@ defmodule LevelupWeb.PersonControllerTest do
 
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.person_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Person"
+      assert html_response(conn, 200) =~ "New person"
     end
   end
 
@@ -81,7 +81,7 @@ defmodule LevelupWeb.PersonControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.person_path(conn, :create), person: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Person"
+      assert html_response(conn, 200) =~ "New person"
     end
   end
 
@@ -90,7 +90,13 @@ defmodule LevelupWeb.PersonControllerTest do
 
     test "renders form for editing chosen person", %{conn: conn, person: person} do
       conn = get(conn, Routes.person_path(conn, :edit, person))
-      assert html_response(conn, 200) =~ "Edit Person"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(
+                 Phoenix.HTML.html_escape(
+                   "Edit #{person.firstname} #{person.lastname} (#{person.identifier})"
+                 )
+               )
     end
   end
 
@@ -104,7 +110,13 @@ defmodule LevelupWeb.PersonControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, person: person} do
       conn = put(conn, Routes.person_path(conn, :update, person), person: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit Person"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(
+                 Phoenix.HTML.html_escape(
+                   "Edit #{person.firstname} #{person.lastname} (#{person.identifier})"
+                 )
+               )
     end
   end
 

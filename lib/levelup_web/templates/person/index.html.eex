@@ -24,5 +24,7 @@
     </tbody>
   </table>
 
-  <%= link gettext("New Person"), to: Routes.person_path(@conn, :new), class: "btn btn-primary" %>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link gettext("New person"), to: Routes.person_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
 </section>

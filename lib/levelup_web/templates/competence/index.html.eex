@@ -1,29 +1,29 @@
-<h1>Listing Competences</h1>
+<section class="container">
+  <h1><%= gettext("Competences") %></h1>
+  <div class="my-3">
+    Manage levels : <%= link("levels", to: Routes.level_path(@conn, :index)) %>
+  </div>
 
-<div>
-Manage levels : <%= link("levels", to: Routes.level_path(@conn, :index)) %>
-</div>
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th><%= gettext("Name") %></th>
+        <th><%= gettext("Details") %></th>
+      </tr>
+    </thead>
+    <tbody>
+    <%= for competence <- @competences do %>
+      <tr>
+        <td><%= competence.name %></td>
+        <td>
+          <%= link gettext("Show"), to: Routes.competence_path(@conn, :show, competence) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for competence <- @competences do %>
-    <tr>
-      <td><%= competence.name %></td>
-
-      <td>
-        <%= link "Show", to: Routes.competence_path(@conn, :show, competence) %>
-        <%= link "Edit", to: Routes.competence_path(@conn, :edit, competence) %>
-        <%= link "Delete", to: Routes.competence_path(@conn, :delete, competence), method: :delete, data: [confirm: "Are you sure?"] %>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Competence", to: Routes.competence_path(@conn, :new) %></span>
+  <div class="d-flex justify-content-end mt-3">
+    <%= link gettext("New competence"), to: Routes.competence_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
+</section>

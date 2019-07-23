@@ -41,13 +41,13 @@
     </tbody>
   </table>
 
-  <div class="d-flex justify-content-end mt-5">
+  <div class="d-flex justify-content-between mt-3">
     <%= link(
       gettext("Delete"),
       to: Routes.position_path(@conn, :delete, @position),
       method: :delete, data: [confirm: gettext("Are you sure?")],
-      class: "btn btn-danger ml-2"
+      class: "btn btn-danger"
     ) %>
-    <%= link gettext("Edit"), to: Routes.position_path(@conn, :edit, @position), class: "btn btn-primary ml-2" %>
+    <%= link gettext("Edit"), to: Routes.position_path(@conn, :edit, @position), class: "btn btn-primary" %>
   </div>
 </section>
