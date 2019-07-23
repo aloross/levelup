@@ -13,40 +13,22 @@ defmodule LevelupWeb.CredentialControllerTest do
     credential
   end
 
-  describe "Prevent unauthorized access" do
-    setup [:create_credential, :as_user]
-
-    test "index credentials", %{conn: conn} do
-      conn = get(conn, Routes.credential_path(conn, :index))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new credential form", %{conn: conn} do
-      conn = get(conn, Routes.credential_path(conn, :new))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new credential", %{conn: conn} do
-      conn = post(conn, Routes.credential_path(conn, :create), credential: @create_attrs)
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit credential form", %{conn: conn, credential: credential} do
-      conn = get(conn, Routes.credential_path(conn, :edit, credential))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit credential valid", %{conn: conn, credential: credential} do
-      conn =
-        put(conn, Routes.credential_path(conn, :update, credential), credential: @update_attrs)
-
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "deletes credential", %{conn: conn, credential: credential} do
-      conn = delete(conn, Routes.credential_path(conn, :delete, credential))
-      assert html_response(conn, 302) =~ "redirected"
-    end
+  test "require user authentication on all actions", %{conn: conn} do
+    Enum.each(
+      [
+        get(conn, Routes.credential_path(conn, :index)),
+        get(conn, Routes.credential_path(conn, :new)),
+        get(conn, Routes.credential_path(conn, :show, "1")),
+        get(conn, Routes.credential_path(conn, :edit, "1")),
+        post(conn, Routes.credential_path(conn, :create, %{})),
+        put(conn, Routes.credential_path(conn, :update, "1", %{})),
+        delete(conn, Routes.credential_path(conn, :delete, "1"))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 
   describe "index" do
@@ -97,7 +79,11 @@ defmodule LevelupWeb.CredentialControllerTest do
 
     test "renders form for editing chosen credential", %{conn: conn, credential: credential} do
       conn = get(conn, Routes.credential_path(conn, :edit, credential))
-      assert html_response(conn, 200) =~ "Edit #{credential.username}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(
+                 Phoenix.HTML.html_escape("Edit #{credential.username}")
+               )
     end
   end
 
@@ -115,7 +101,10 @@ defmodule LevelupWeb.CredentialControllerTest do
       conn =
         put(conn, Routes.credential_path(conn, :update, credential), credential: @invalid_attrs)
 
-      assert html_response(conn, 200) =~ "Edit #{credential.username}"
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(
+                 Phoenix.HTML.html_escape("Edit #{credential.username}")
+               )
     end
   end
 

@@ -8,39 +8,22 @@ defmodule LevelupWeb.PositionControllerTest do
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
-  describe "Prevent unauthorized access" do
-    setup [:create_position]
-
-    test "index positions", %{conn: conn} do
-      conn = get(conn, Routes.position_path(conn, :index))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new position form", %{conn: conn} do
-      conn = get(conn, Routes.position_path(conn, :new))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new position", %{conn: conn} do
-      conn = post(conn, Routes.position_path(conn, :create), position: @create_attrs)
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit position form", %{conn: conn, position: position} do
-      conn = get(conn, Routes.position_path(conn, :edit, position))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit position valid", %{conn: conn, position: position} do
-      conn = put(conn, Routes.position_path(conn, :update, position), position: @update_attrs)
-
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "deletes position", %{conn: conn, position: position} do
-      conn = delete(conn, Routes.position_path(conn, :delete, position))
-      assert html_response(conn, 302) =~ "redirected"
-    end
+  test "require user authentication on all actions", %{conn: conn} do
+    Enum.each(
+      [
+        get(conn, Routes.position_path(conn, :index)),
+        get(conn, Routes.position_path(conn, :new)),
+        get(conn, Routes.position_path(conn, :show, "1")),
+        get(conn, Routes.position_path(conn, :edit, "1")),
+        post(conn, Routes.position_path(conn, :create, %{})),
+        put(conn, Routes.position_path(conn, :update, "1", %{})),
+        delete(conn, Routes.position_path(conn, :delete, "1"))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 
   describe "index" do
@@ -82,7 +65,9 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders form for editing chosen position", %{conn: conn, position: position} do
       conn = get(conn, Routes.position_path(conn, :edit, position))
-      assert html_response(conn, 200) =~ "Edit #{position.name}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{position.name}"))
     end
   end
 
@@ -96,7 +81,9 @@ defmodule LevelupWeb.PositionControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, position: position} do
       conn = put(conn, Routes.position_path(conn, :update, position), position: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit #{position.name}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{position.name}"))
     end
   end
 

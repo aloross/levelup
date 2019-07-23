@@ -8,40 +8,22 @@ defmodule LevelupWeb.CompetenceControllerTest do
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
-  describe "Prevent unauthorized access" do
-    setup [:create_competence]
-
-    test "index competences", %{conn: conn} do
-      conn = get(conn, Routes.competence_path(conn, :index))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new competence form", %{conn: conn} do
-      conn = get(conn, Routes.competence_path(conn, :new))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new competence", %{conn: conn} do
-      conn = post(conn, Routes.competence_path(conn, :create), competence: @create_attrs)
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit competence form", %{conn: conn, competence: competence} do
-      conn = get(conn, Routes.competence_path(conn, :edit, competence))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit competence valid", %{conn: conn, competence: competence} do
-      conn =
-        put(conn, Routes.competence_path(conn, :update, competence), competence: @update_attrs)
-
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "deletes competence", %{conn: conn, competence: competence} do
-      conn = delete(conn, Routes.competence_path(conn, :delete, competence))
-      assert html_response(conn, 302) =~ "redirected"
-    end
+  test "require user authentication on all actions", %{conn: conn} do
+    Enum.each(
+      [
+        get(conn, Routes.competence_path(conn, :index)),
+        get(conn, Routes.competence_path(conn, :new)),
+        get(conn, Routes.competence_path(conn, :show, "1")),
+        get(conn, Routes.competence_path(conn, :edit, "1")),
+        post(conn, Routes.competence_path(conn, :create, %{})),
+        put(conn, Routes.competence_path(conn, :update, "1", %{})),
+        delete(conn, Routes.competence_path(conn, :delete, "1"))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 
   describe "index" do
@@ -83,7 +65,9 @@ defmodule LevelupWeb.CompetenceControllerTest do
 
     test "renders form for editing chosen competence", %{conn: conn, competence: competence} do
       conn = get(conn, Routes.competence_path(conn, :edit, competence))
-      assert html_response(conn, 200) =~ "Edit #{competence.name}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{competence.name}"))
     end
   end
 
@@ -101,7 +85,8 @@ defmodule LevelupWeb.CompetenceControllerTest do
       conn =
         put(conn, Routes.competence_path(conn, :update, competence), competence: @invalid_attrs)
 
-      assert html_response(conn, 200) =~ "Edit #{competence.name}"
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{competence.name}"))
     end
   end
 

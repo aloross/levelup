@@ -8,39 +8,22 @@ defmodule LevelupWeb.LevelControllerTest do
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
-  describe "Prevent unauthorized access" do
-    setup [:create_level]
-
-    test "index levels", %{conn: conn} do
-      conn = get(conn, Routes.level_path(conn, :index))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new level form", %{conn: conn} do
-      conn = get(conn, Routes.level_path(conn, :new))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "new level", %{conn: conn} do
-      conn = post(conn, Routes.level_path(conn, :create), level: @create_attrs)
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit level form", %{conn: conn, level: level} do
-      conn = get(conn, Routes.level_path(conn, :edit, level))
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "edit level valid", %{conn: conn, level: level} do
-      conn = put(conn, Routes.level_path(conn, :update, level), level: @update_attrs)
-
-      assert html_response(conn, 302) =~ "redirected"
-    end
-
-    test "deletes level", %{conn: conn, level: level} do
-      conn = delete(conn, Routes.level_path(conn, :delete, level))
-      assert html_response(conn, 302) =~ "redirected"
-    end
+  test "require user authentication on all actions", %{conn: conn} do
+    Enum.each(
+      [
+        get(conn, Routes.level_path(conn, :index)),
+        get(conn, Routes.level_path(conn, :new)),
+        get(conn, Routes.level_path(conn, :show, "1")),
+        get(conn, Routes.level_path(conn, :edit, "1")),
+        post(conn, Routes.level_path(conn, :create, %{})),
+        put(conn, Routes.level_path(conn, :update, "1", %{})),
+        delete(conn, Routes.level_path(conn, :delete, "1"))
+      ],
+      fn conn ->
+        assert html_response(conn, 302)
+        assert conn.halted
+      end
+    )
   end
 
   describe "index" do
@@ -82,7 +65,9 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders form for editing chosen level", %{conn: conn, level: level} do
       conn = get(conn, Routes.level_path(conn, :edit, level))
-      assert html_response(conn, 200) =~ "Edit #{level.name}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{level.name}"))
     end
   end
 
@@ -96,7 +81,9 @@ defmodule LevelupWeb.LevelControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn, level: level} do
       conn = put(conn, Routes.level_path(conn, :update, level), level: @invalid_attrs)
-      assert html_response(conn, 200) =~ "Edit #{level.name}"
+
+      assert html_response(conn, 200) =~
+               Phoenix.HTML.safe_to_string(Phoenix.HTML.html_escape("Edit #{level.name}"))
     end
   end
 
